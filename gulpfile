@@ -1,3 +1,29 @@
+json
+{
+  "name": "Project",
+  "version": "1.0.0",
+  "description": "Project Description ",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonatan Machado",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "3.1.1",
+    "gulp-concat": "2.6.1",
+    "gulp-notify": "3.0.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "3.1.0",
+    "gulp-uglify": "2.1.2",
+    "gulp-sourcemaps": "2.5.1",
+    "gulp-clean-css": "3.0.4",
+    "browser-sync": "2.18.8"
+  }
+}
+
+js
 //proxy
 var proxy = 'proxy.dev'
 
