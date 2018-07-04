@@ -1,0 +1,29 @@
+Nginx
+
+location = / { index index.html index.php; }
+error_page 404 = /404;
+
+location ^~ /dev/ { return 403; }
+location /downloader/ {
+  #allow 1.1.1.1;
+  deny all;
+  # other code, depending on your config and the way of passing requests to PHP
+  # usually the same as for / location
+}
+
+if ($host !~* ^www\.){
+   rewrite ^(.*)$ http://www.$host$1 permanent;
+}
+
+location /api {
+  rewrite ^/api/rest /api.php?type=rest last;
+  rewrite ^/api/v2_soap /api.php?type=v2_soap last;
+  rewrite ^/api/soap /api.php?type=soap last;
+}
+
+location ~ ^(/?rss|/rss) {
+  #allow 1.1.1.1;
+  try_files $uri $uri/ /index.php?$args;
+  location ~* \.php$ { try_files /dummy @proxy; }
+  deny all;
+}
