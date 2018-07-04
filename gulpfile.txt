@@ -1,0 +1,157 @@
+//proxy
+var proxy = 'proxy.dev'
+
+//packages padrao
+var gulp = require('gulp');  
+    notify = require('gulp-notify');
+    gutil = require('gulp-util');
+    rename = require('gulp-rename');
+    browserSync = require('browser-sync').create();
+    reload      = browserSync.reload;
+
+    //packages css
+    sass = require('gulp-sass');
+    concat = require("gulp-concat");
+    autoprefixer = require('gulp-autoprefixer');
+    sourcemaps = require('gulp-sourcemaps');
+    cleanCSS = require('gulp-clean-css');
+
+    //packages js
+    uglify = require('gulp-uglify');
+
+//var dos caminhos dos arquivos css
+var sassFiles = 'css/_scss/**/*.scss',
+    cssDest = 'css/_css',
+    cssFiles = 'css/_css/*.css',
+    cssminDest = 'css/';
+
+//var dos caminhos dos arquivos js
+var jsFiles = 'js/_js/**/*.js',
+    jsDest = 'js/';
+
+//notificaçao e log de erro
+reportError = function (error) {
+  
+  //notifica o erro
+  notify({
+      title: 'Opss.. Tem algo errado!',
+      message: 'Da uma olhada ai no seu console.'
+  }).write(error);
+  
+  //imprime info do erro no console
+  console.log(error.toString());
+
+}
+
+//style sass para css e autoprefixer
+gulp.task('sass', function(){
+
+    //caminho do scss
+    gulp.src(sassFiles)
+
+    //converter scss a css
+    .pipe(sass().on('error', reportError))
+
+    //faz o autoprefixer
+    .pipe(autoprefixer({
+     remove: false,
+     cascade: false,
+     browsers: [
+        'last 4 Chrome versions',
+        'last 4 Firefox versions',
+        'last 4 Explorer versions',
+        'last 4 Edge versions',
+        'last 4 iOS versions',
+        'last 4 Opera versions',
+        'last 4 Safari versions',
+        'last 4 OperaMobile versions',
+        'last 4 OperaMini versions',
+        'last 4 ChromeAndroid versions',
+        'last 4 FirefoxAndroid versions',
+        'last 4 ExplorerMobile versions'
+      ]
+    }))
+
+    //juntar tudo em um so arquivo
+    .pipe(concat('style.css'))
+
+    //caminho do css
+    .pipe(gulp.dest(cssDest));
+});
+
+//minify e concat css
+gulp.task('minify', function(){
+   
+   //caminho dos doa aquivos css
+   gulp.src(cssFiles)
+
+   //remoneia .min 
+   .pipe(rename('style.min.css').on('error', reportError))
+    
+   //cria o sourcemaps dos css
+   .pipe(sourcemaps.init())
+
+   //minifyca os arquivos css
+   .pipe(cleanCSS({debug: true}, function(details) {
+        console.log(details.name + ': ' + details.stats.originalSize);
+        console.log(details.name + ': ' + details.stats.minifiedSize);
+    }))
+
+   //escreve os sourcemaps do css em um arquivos separado .map
+   .pipe(sourcemaps.write('/'))
+    
+   //caminho do css.min 
+   .pipe(gulp.dest(cssminDest))
+
+});
+
+//uglify e concat js
+gulp.task('uglify', function(){
+
+    return gulp.src([jsFiles])
+
+      //junta todos os arquivos js
+      .pipe(concat('script.min.js'))
+
+      //cria o sourcemaps dos js
+      .pipe(sourcemaps.init())
+
+      //uglify os arquivos js
+      .pipe(uglify().on('error', reportError))
+
+      //escreve os sourcemaps do js em um arquivos separado .map
+      .pipe(sourcemaps.write('/'))
+      
+      //caminho do js.min
+      .pipe(gulp.dest(jsDest));
+        
+});
+
+//browserSync
+gulp.task('browserSync', function () {
+
+    //config do browserSync
+    browserSync.init({
+      files: 'css/*.css',
+      proxy: proxy
+    });
+
+    //da reload na pagina se o arquivos php for alterado
+    gulp.watch("*.php").on("change", reload);
+
+    //da reload na pagina se o arquivos js for alterado
+    gulp.watch(jsFiles).on("change", reload);
+});
+
+//digitando 'gulp' executa a tarefa padrao watch e o browserSync
+gulp.task('default', ['watch', 'browserSync']);
+
+//digitando 'gulp init' executa as tarefas sass e minify
+gulp.task('init', ['sass', 'minify', 'uglify']);
+
+//tarefa que fica monitorando as alteraçoes nos arquivos scss e os css
+gulp.task('watch',function() {
+    gulp.watch(jsFiles,['uglify']);
+    gulp.watch(sassFiles,['sass']);
+    gulp.watch([cssFiles],['minify']);
+});
