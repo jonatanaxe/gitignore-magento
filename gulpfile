@@ -1,4 +1,4 @@
-json
+package.json
 {
   "name": "Project",
   "version": "1.0.0",
@@ -23,7 +23,7 @@ json
   }
 }
 
-js
+gulpfile.js
 //proxy
 var proxy = 'proxy.dev'
 
