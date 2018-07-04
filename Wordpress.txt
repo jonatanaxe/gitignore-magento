@@ -1,0 +1,47 @@
+/**
+ * Configs personalizadas
+ * Segurança
+ * Desempenho! :D
+ * Isso deve ser alterado dependendo do projeto.
+ */
+
+wp-config.php
+
+/* Debug personalisado somente usar em modo de desenvolvimento */
+// define('WP_DEBUG_LOG', true);
+// define('WP_DEBUG_DISPLAY', false);
+// define( 'SCRIPT_DEBUG', true );
+// define ( 'JETPACK_DEV_DEBUG', true);
+
+/* Usado para atualizar sem precisar de permissão ftp somente usar em modo de desenvolvimento */
+define('FS_METHOD','direct');
+
+/* Por padrao cache sempre habilitado */
+define('WP_CACHE', true);
+
+/* Desabilitando editar arquivos pelo admin  */
+define('DISALLOW_FILE_EDIT', true);
+
+/* Desabilitando as revisões de posts ou aumentar tempo */
+define('WP_POST_REVISIONS', false);
+// define( 'AUTOSAVE_INTERVAL', 160 );
+// define( 'WP_POST_REVISIONS', 10 );
+
+/* limpar lixeira apos em dias  */
+define( 'EMPTY_TRASH_DAYS', 10 );
+
+/* Remover versões das imagens antigas */
+define('IMAGE_EDIT_OVERWRITE', true);
+
+/* Url base dinamica para migraçao PS: Deve ser alterado no banco de dados tambem */
+define('WP_HOME','http://'. $_SERVER['SERVER_NAME']);
+define('WP_SITEURL','http://'. $_SERVER['SERVER_NAME']);
+
+/* Força o ssl no admin */
+// define( 'FORCE_SSL_ADMIN', true );
+
+/**
+ * Configs personalizadas
+ * Segurança
+ * Desempenho! :D
+ */
