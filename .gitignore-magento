@@ -35,6 +35,9 @@ Thumbs.db
 *.swp
 *.gz
 .vscode
+.travis.yml
+clean.php
+reindex.php
 
 #Pastas e arquivos desnecessários
 
