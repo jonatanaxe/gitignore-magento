@@ -14,7 +14,7 @@ wp-config.php
 // define('JETPACK_DEV_DEBUG', true);
 
 /* Usado para atualizar sem precisar de permissão ftp somente usar em modo de desenvolvimento */
-define('FS_METHOD','direct');
+//define('FS_METHOD','direct');
 
 /* Por padrao cache sempre habilitado */
 define('WP_CACHE', true);
