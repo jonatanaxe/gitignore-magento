@@ -535,7 +535,7 @@
     "browsercache.html.cache.control": "1",
     "browsercache.html.cache.policy": "cache_public_maxage",
     "browsercache.html.etag": "1",
-    "browsercache.html.w3tc": "0",
+    "browsercache.html.w3tc": "1",
     "browsercache.html.replace": false,
     "browsercache.other.last_modified": "1",
     "browsercache.other.compression": "1",
@@ -546,7 +546,7 @@
     "browsercache.other.cache.control": "1",
     "browsercache.other.cache.policy": "cache_public_maxage",
     "browsercache.other.etag": "1",
-    "browsercache.other.w3tc": "0",
+    "browsercache.other.w3tc": "1",
     "browsercache.other.replace": "0",
     "browsercache.other.querystring": "0",
     "browsercache.replace.exceptions": [
